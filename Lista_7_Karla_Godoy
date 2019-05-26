@@ -1,0 +1,300 @@
+# Aluna: Karla Godoy
+
+require(tidyverse)
+require(magrittr)
+require(ggplot2)
+require (modelr)
+
+
+setwd("C:\\Users\\karla\\Desktop\\Mestrado\\AnÃ¡lise de Dados\\Lista 7")
+
+install.packages("haven")
+library("haven")
+
+# 1
+
+# A
+
+read_dta("fair.dta")
+
+summary(read_dta("fair.dta"))
+
+#  YEAR           VOTE           PARTY            PERSON          DURATION     
+# Min.   :1880   Min.   :36.12   Min.   :-1.000   Min.   :0.0000   Min.   :0.0000  
+# 1st Qu.:1911   1st Qu.:49.43   1st Qu.:-1.000   1st Qu.:0.0000   1st Qu.:0.0000  
+# Median :1942   Median :52.03   Median :-1.000   Median :1.0000   Median :1.0000  
+# Mean   :1942   Mean   :52.27   Mean   :-0.125   Mean   :0.5938   Mean   :0.7031  
+# 3rd Qu.:1973   3rd Qu.:55.69   3rd Qu.: 1.000   3rd Qu.:1.0000   3rd Qu.:1.2500  
+# Max.   :2004   Max.   :62.46   Max.   : 1.000   Max.   :1.0000   Max.   :2.0000  
+# WAR              GROWTH          INFLATION        GOODNEWS     
+# Min.   :0.00000   Min.   :-14.557   Min.   :0.000   Min.   : 0.000  
+# 1st Qu.:0.00000   1st Qu.: -1.674   1st Qu.:1.398   1st Qu.: 3.750  
+# Median :0.00000   Median :  2.245   Median :2.159   Median : 5.000  
+# Mean   :0.09375   Mean   :  0.628   Mean   :2.657   Mean   : 5.281  
+# 3rd Qu.:0.00000   3rd Qu.:  4.061   3rd Qu.:3.352   3rd Qu.: 7.250  
+# Max.   :1.00000   Max.   : 11.677   Max.   :7.926   Max.   :10.000 
+
+# B 
+
+# Realizando RegressÃ£o Bivariada 
+
+regressaoB <- lm(VOTE ~ GROWTH, data = read_dta("fair.dta"))
+
+summary(regressaoB)
+
+# Call:
+#  lm(formula = VOTE ~ GROWTH, data = read_dta("fair.dta"))
+
+# Residuals:
+#  Min      1Q  Median      3Q     Max 
+# -8.2487 -3.3330 -0.4282  3.1425  9.7286 
+
+# Coefficients:
+#  Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)  51.8598     0.8817  58.821  < 2e-16 ***
+#  GROWTH        0.6536     0.1607   4.068 0.000316 ***
+  ---
+#  Signif. codes:  0 â***â 0.001 â**â 0.01 â*â 0.05 â.â 0.1 â â 1
+
+# Residual standard error: 4.955 on 30 degrees of freedom
+# Multiple R-squared:  0.3555,	Adjusted R-squared:  0.3341 
+# F-statistic: 16.55 on 1 and 30 DF,  p-value: 0.0003165
+  
+  Descreva as variÃ¡veis utilizadas no modelo e sua relaÃ§Ã£o;
+ii) Apresente os resultados do modelo;
+iii) Avalie o modelo quanto a seu ajuste e sua capacidade explicativa.
+
+# I
+
+# As variaveis utilizadas no modelo foram o percentual de votos no 
+# candidato incubente (variavel dependente) e o crescimento da economia (variavel independente).
+# A relacao dessas variaveis e positiva e significante.
+
+# II
+
+# O modelo apresenta como resultado, alÃ©m da relacao positiva e significante apresentada, 
+# que o aumento de 1 unidade de crescimento economico, aumenta 0.65% no percentual de votos 
+# no candidato incubente. 
+  
+# III
+
+# O erro padrao e a distÃ¢ncia mÃ©dia entre os pontos e a linha do modelo expressa na unidade de medida 
+# da variÃ¡vel dependente. O erro padrao observado de 4.955 no modelo e bem arriscado quando se trata
+# de eleicoes.
+# Ja com relacao a capacidade explicativa do modelo, o rÂ² ajustado apresenta o valor de 0.3341.
+# O que  significa dizer que a variavel independente explica 0.3341 da variavel dependente. 
+
+
+# C
+
+# Realizando RegressÃ£o Multivariada 
+
+read_dta("fair.dta")
+
+regressaoC <- lm(VOTE ~ GROWTH + GOODNEWS, data = read_dta("fair.dta"))
+
+summary(regressaoC)
+
+
+# Call:
+#   lm(formula = VOTE ~ GROWTH + GOODNEWS, data = read_dta("fair.dta"))
+
+# Residuals:
+#  Min      1Q  Median      3Q     Max 
+# -8.3125 -3.9191  0.4876  3.0489  9.6846 
+
+# Coefficients:
+#  Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)  48.1202     1.7476  27.535  < 2e-16 ***
+#  GROWTH        0.5730     0.1527   3.752 0.000781 ***
+#  GOODNEWS      0.7177     0.2964   2.421 0.021947 *  
+  ---
+# Signif. codes:  0 â***â 0.001 â**â 0.01 â*â 0.05 â.â 0.1 â â 1
+
+# Residual standard error: 4.596 on 29 degrees of freedom
+# Multiple R-squared:  0.4639,	Adjusted R-squared:  0.4269 
+# F-statistic: 12.55 on 2 and 29 DF,  p-value: 0.0001185
+
+# I
+
+  
+
+# II
+
+
+# III
+
+# Quanto ao Ajuste- Erro
+
+
+# Capacidade explicativa- RÂ² ajustado
+
+#Coeficientes estimados
+
+coef(regressaoC)
+
+# (Intercept)      GROWTH    GOODNEWS 
+# 48.1202439   0.5729756   0.7176608
+
+# Intervalos de ConfianÃ§a
+
+confint(regressaoC)
+
+#              2.5 %     97.5 %
+# (Intercept) 44.5460566 51.6944312
+# GROWTH       0.2606609  0.8852903
+# GOODNEWS     0.1114819  1.3238397
+
+# RMSE
+
+rmse(regressaoC,data = read_dta("fair.dta") )
+
+# 4.375343
+
+# IV
+
+
+# V
+
+# ResÃ­duos e homocedasticidade
+
+par(mfrow = c(2,2))
+
+plot(regressaoC, which= c(1:4), pch= 20)
+
+shapiro.test(regressaoC$residuals)
+
+# Shapiro-Wilk normality test
+
+# data:  regressaoC$residuals
+# W = 0.97866, p-value = 0.7598
+
+# O Teste de Shapiro-Wilk para normalidade avalia a aderÃªncia dos resÃ­duos Ã  distribuiÃ§Ã£o Normal. 
+# O p-valor se refere Ã  hipÃ³tese de que os resÃ­duos seguem de fato uma distribuiÃ§Ã£o Normal,
+# e essa hipÃ³tese Ã© rejeitada, de modo geral, quando p Ã© menor que 0.05. Neste caso, podemos afirmar
+# que os residuos tem distribuicao normal.
+
+
+# D
+read_dta("fair.dta")
+
+regressaoD <- lm(VOTE ~ GROWTH + GOODNEWS + WAR, data = read_dta("fair.dta"))
+
+summary(regressaoD)
+
+# Call:
+# lm(formula = VOTE ~ GROWTH + GOODNEWS + WAR, data = read_dta("fair.dta"))
+
+# Residuals:
+#   Min      1Q  Median      3Q     Max 
+# -8.3043 -3.9080  0.5065  3.0190  9.7032 
+
+# Coefficients:
+#  Estimate Std. Error t value Pr(>|t|)    
+# (Intercept)  48.0479     2.3386  20.545  < 2e-16 ***
+#  GROWTH        0.5729     0.1554   3.686 0.000969 ***
+#  GOODNEWS      0.7284     0.3761   1.937 0.062925 .  
+# WAR           0.1698     3.5622   0.048 0.962322    
+---
+#  Signif. codes:  0 â***â 0.001 â**â 0.01 â*â 0.05 â.â 0.1 â â 1
+
+# Residual standard error: 4.677 on 28 degrees of freedom
+# Multiple R-squared:  0.464,	Adjusted R-squared:  0.4065 
+# F-statistic: 8.078 on 3 and 28 DF,  p-value: 0.0004951
+ 
+
+# I
+  
+  
+# II
+
+
+# III
+
+# Quanto ao Ajuste- Erro
+
+
+# Capacidade explicativa- RÂ² ajustado
+
+#Coeficientes estimados
+
+coef(regressaoD)
+
+# (Intercept)      GROWTH    GOODNEWS         WAR 
+# -48.0478580  -0.5728541  -0.7283675  -0.1697900 
+
+# Intervalos de ConfianÃ§a
+
+confint(regressaoD)
+
+#                  2.5 %     97.5 %
+# (Intercept) 43.25739623 52.8383197
+# GROWTH       0.25448754  0.8912206
+# GOODNEWS    -0.04198698  1.4987219
+# WAR         -7.12709113  7.4666712         
+
+# RMSE
+
+rmse(regressaoD,data = read_dta("fair.dta"))
+
+# 4.375166
+
+# IV
+
+
+# V
+
+# ResÃ­duos e homocedasticidade
+
+par(mfrow = c(2,2))
+
+plot(regressaoD, which= c(1:4), pch= 20)
+
+shapiro.test(regressaoD$residuals)
+
+# Shapiro-Wilk normality test
+
+# data:  regressaoD$residuals
+# W = 0.97851, p-value = 0.7554
+
+# O Teste de Shapiro-Wilk para normalidade avalia a aderÃªncia dos resÃ­duos Ã  distribuiÃ§Ã£o Normal. 
+# O p-valor se refere Ã  hipÃ³tese de que os resÃ­duos seguem de fato uma distribuiÃ§Ã£o Normal,
+# e essa hipÃ³tese Ã© rejeitada, de modo geral, quando p Ã© menor que 0.05. Neste caso, podemos afirmar
+# que os residuos tem distribuicao normal.
+
+# VI
+
+
+# 2
+
+# A
+
+# Reynolds, A. (1999). Women in the Legislatures and Executives of the World:
+# Knocking at the Highest Glass Ceiling. World Politics, 51(04), 547â572. 
+# DOI: 10.1017/S0043887100009254
+
+#B
+# A partir do trabalho apresentado pela autora e para responder sua pergunta de pesquisa, sobre 
+# quais fatores que dificultam ou facilitam o acesso das mulheres Ã  representaÃ§Ã£o polÃ­tica,a mesma
+# desenvolve dois modelos de Regressao multivariadas. No primeiro modelo a variavel dependente e 
+# o percentual de mulheres no legislativo e no segundo o numero de mulheres no executivo.
+# No modelo 1, para operacionalizar os fatores institucionais, polÃ­ticos, sociais e culturais,
+# apresentados pela teoria mobilizada pela autora, doze variÃ¡veis independentes foram 
+# incluÃ­das neste primeiro modelo.Ja para o segundo modelo foram utilizadas 8 variaveis independentes
+# para explicar o percentual de mulheres no executivo. 
+
+#C 
+
+# Para o Modelo 1, a regressÃ£o sugere que  a partir das variÃ¡veis que se mostraram significantes Ã© possÃ­vel 
+# observar que um maior percentual de mulheres se torna parlamentar quando partidos de ideologia favorÃ¡vel
+# a neutralidade de gÃªnero estÃ£o no poder, quando a cultura nacional e a religiÃ£o nÃ£o sÃ£o contra a participaÃ§Ã£o
+# de mulheres em posiÃ§Ãµes de poder, assim como  o nÃ­vel de desenvolvimento socioeconÃ´mico das mulheres
+# o histÃ³rico de participaÃ§Ã£o de mulheres em eleiÃ§Ãµes multipartidÃ¡rias. Tambem se mostrou significante a 
+# influencia de nÃºmeros pequenos de partidos e sistemas eleitorais que nao tenham clausulas de barreira 
+# que dificultam a eleiÃ§Ã£o de mulheres.
+
+# Para o Modelo 2, as variÃ¡veis que representam historia e cultura que sÃ£o: religiÃ£o, anos de candidatura,
+# histÃ³rico de mulheres  concorrendo a cargos e ideologia do governo e anos de eleiÃ§Ã£o se mostraram significantes
+# na analise do modelo.  A presenÃ§a de um movimento polÃ­tico de esquerda tambÃ©m se mostrou significativo, 
+# enquanto o percentual de votos na esquerda, nÃ£o. Para o modelo 2  o nÃ­vel de desenvolvimento socioeconÃ´mico 
+# das mulheres se mostrou estatisticamente insignificante, resultado diferente do modelo 1.
