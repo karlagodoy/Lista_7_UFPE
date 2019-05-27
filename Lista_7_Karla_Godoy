@@ -1,3 +1,4 @@
+# Lista 7
 # Aluna: Karla Godoy
 
 require(tidyverse)
@@ -5,15 +6,16 @@ require(magrittr)
 require(ggplot2)
 require (modelr)
 
-
-setwd("C:\\Users\\karla\\Desktop\\Mestrado\\AnÃ¡lise de Dados\\Lista 7")
-
 install.packages("haven")
-library("haven")
+
+library(haven)
+require(haven)
 
 # 1
 
 # A
+
+setwd("C:\\Users\\karla\\Desktop\\Mestrado\\Análise de Dados\\Lista 7")
 
 read_dta("fair.dta")
 
@@ -54,16 +56,12 @@ summary(regressaoB)
 # (Intercept)  51.8598     0.8817  58.821  < 2e-16 ***
 #  GROWTH        0.6536     0.1607   4.068 0.000316 ***
   ---
-#  Signif. codes:  0 â***â 0.001 â**â 0.01 â*â 0.05 â.â 0.1 â â 1
+#  Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 # Residual standard error: 4.955 on 30 degrees of freedom
 # Multiple R-squared:  0.3555,	Adjusted R-squared:  0.3341 
 # F-statistic: 16.55 on 1 and 30 DF,  p-value: 0.0003165
   
-  Descreva as variÃ¡veis utilizadas no modelo e sua relaÃ§Ã£o;
-ii) Apresente os resultados do modelo;
-iii) Avalie o modelo quanto a seu ajuste e sua capacidade explicativa.
-
 # I
 
 # As variaveis utilizadas no modelo foram o percentual de votos no 
@@ -72,16 +70,16 @@ iii) Avalie o modelo quanto a seu ajuste e sua capacidade explicativa.
 
 # II
 
-# O modelo apresenta como resultado, alÃ©m da relacao positiva e significante apresentada, 
+# O modelo apresenta como resultado, alem da relacao positiva e significante apresentada, 
 # que o aumento de 1 unidade de crescimento economico, aumenta 0.65% no percentual de votos 
 # no candidato incubente. 
   
 # III
 
-# O erro padrao e a distÃ¢ncia mÃ©dia entre os pontos e a linha do modelo expressa na unidade de medida 
-# da variÃ¡vel dependente. O erro padrao observado de 4.955 no modelo e bem arriscado quando se trata
+# O erro padrao e a distÃ¢ncia media entre os pontos e a linha do modelo expressa na unidade de medida 
+# da variavel dependente. O erro padrao observado de 4.955 no modelo e bem arriscado quando se trata
 # de eleicoes.
-# Ja com relacao a capacidade explicativa do modelo, o rÂ² ajustado apresenta o valor de 0.3341.
+# Ja com relacao a capacidade explicativa do modelo, o r² ajustado apresenta o valor de 0.3341.
 # O que  significa dizer que a variavel independente explica 0.3341 da variavel dependente. 
 
 
@@ -109,25 +107,28 @@ summary(regressaoC)
 #  GROWTH        0.5730     0.1527   3.752 0.000781 ***
 #  GOODNEWS      0.7177     0.2964   2.421 0.021947 *  
   ---
-# Signif. codes:  0 â***â 0.001 â**â 0.01 â*â 0.05 â.â 0.1 â â 1
-
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 # Residual standard error: 4.596 on 29 degrees of freedom
 # Multiple R-squared:  0.4639,	Adjusted R-squared:  0.4269 
 # F-statistic: 12.55 on 2 and 29 DF,  p-value: 0.0001185
 
 # I
 
-  
+# Variavel adicionada ao modelo foi "GOODNEWS". Com a inserção dessa variavel no modelo
+# podemos analisar quais e quanto variavel explica o aumento de votos no presidente incubente.
+# GOODNEWS é considerado significante no modelo. 
 
 # II
 
+# O modelo apresenta que o aumento de 1 unidade da variavel Growth, existe um aumento de 0,5730%
+# na variavel dependente. Ja para a variavel GOODNEWS, atraves do modelo podemos observar que 
+# o aumento de uma unidade da variavel independente ocorre o aumento de 0,7177 na variavel depentente.
 
 # III
 
-# Quanto ao Ajuste- Erro
-
-
-# Capacidade explicativa- RÂ² ajustado
+# O R² varia entre 0 e 1 e indica em percentagem o quanto o modelo consegue explicar os valores
+# observados na variavel dependente.Quanto ao R² ajustado apresentado no modelo 2, o modelo apresenta 
+# o valor de 0,4269.
 
 #Coeficientes estimados
 
@@ -136,7 +137,11 @@ coef(regressaoC)
 # (Intercept)      GROWTH    GOODNEWS 
 # 48.1202439   0.5729756   0.7176608
 
-# Intervalos de ConfianÃ§a
+# Para os coefientes estimados de angulação da reta o modelo retorna os valores de 48,12 para quando X1 e X2 forem 0
+# Já para X1 o valor é 0,5729 quando Goodnews é zero. Já para GOODNEWS, o valor apresentado foi de 0,7176
+# para quando GROWTH for 0.
+
+# Intervalos de Confianca
 
 confint(regressaoC)
 
@@ -145,18 +150,24 @@ confint(regressaoC)
 # GROWTH       0.2606609  0.8852903
 # GOODNEWS     0.1114819  1.3238397
 
+# Temos 97,5% de "chance" dos intervalos apresentados conterem o verdadeiro valor da média populacional.
+
 # RMSE
 
-rmse(regressaoC,data = read_dta("fair.dta") )
+rmse(regressaoC,data = read_dta("fair.dta") ) # 4.375343
 
-# 4.375343
+# O RMSE é a raiz quadrada da variância dos resíduos e indica o ajuste absoluto do modelo aos dados.
+# Valores menores de RMSE indicam melhor ajuste do modelo aos dados apresentados. 
 
 # IV
+
+# Com relaçao ao R² ajustado do modelo 1 e do modelo 2 de regressão, o modelo que mais consegue
+# explicar os valores da variavel dependente é o modelo de regressao 2.
 
 
 # V
 
-# ResÃ­duos e homocedasticidade
+# Residuos e homocedasticidade
 
 par(mfrow = c(2,2))
 
@@ -169,82 +180,98 @@ shapiro.test(regressaoC$residuals)
 # data:  regressaoC$residuals
 # W = 0.97866, p-value = 0.7598
 
-# O Teste de Shapiro-Wilk para normalidade avalia a aderÃªncia dos resÃ­duos Ã  distribuiÃ§Ã£o Normal. 
-# O p-valor se refere Ã  hipÃ³tese de que os resÃ­duos seguem de fato uma distribuiÃ§Ã£o Normal,
-# e essa hipÃ³tese Ã© rejeitada, de modo geral, quando p Ã© menor que 0.05. Neste caso, podemos afirmar
-# que os residuos tem distribuicao normal.
+# O Teste de Shapiro-Wilk para normalidade avalia a aderencia dos residuos a distribuicao Normal. 
+# O p-valor se refere a hipotese de que os residuos seguem de fato uma distribuicao Normal,
+# e essa hipotese e rejeitada, de modo geral, quando p valor e menor que 0.05. Neste caso, podemos afirmar
+# que os residuos tem distribuicao normal pois o p valor e maior que 0.05.
 
 
 # D
 read_dta("fair.dta")
 
-regressaoD <- lm(VOTE ~ GROWTH + GOODNEWS + WAR, data = read_dta("fair.dta"))
+regressaoD <- lm(VOTE ~ GROWTH + WAR, data = read_dta("fair.dta"))
 
 summary(regressaoD)
 
 # Call:
-# lm(formula = VOTE ~ GROWTH + GOODNEWS + WAR, data = read_dta("fair.dta"))
+#  lm(formula = VOTE ~ GROWTH + WAR, data = read_dta("fair.dta"))
 
 # Residuals:
-#   Min      1Q  Median      3Q     Max 
-# -8.3043 -3.9080  0.5065  3.0190  9.7032 
+#  Min      1Q  Median      3Q     Max 
+# -8.1789 -3.6648  0.3595  3.0116  9.2815 
 
 # Coefficients:
 #  Estimate Std. Error t value Pr(>|t|)    
-# (Intercept)  48.0479     2.3386  20.545  < 2e-16 ***
-#  GROWTH        0.5729     0.1554   3.686 0.000969 ***
-#  GOODNEWS      0.7284     0.3761   1.937 0.062925 .  
-# WAR           0.1698     3.5622   0.048 0.962322    
+# (Intercept)  52.2460     0.9186  56.876  < 2e-16 ***
+#  GROWTH        0.6284     0.1598   3.932 0.000481 ***
+#  WAR          -3.9510     2.9894  -1.322 0.196609    
 ---
-#  Signif. codes:  0 â***â 0.001 â**â 0.01 â*â 0.05 â.â 0.1 â â 1
+#  Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-# Residual standard error: 4.677 on 28 degrees of freedom
-# Multiple R-squared:  0.464,	Adjusted R-squared:  0.4065 
-# F-statistic: 8.078 on 3 and 28 DF,  p-value: 0.0004951
+# Residual standard error: 4.894 on 29 degrees of freedom
+# Multiple R-squared:  0.3922,	Adjusted R-squared:  0.3502 
+# F-statistic: 9.355 on 2 and 29 DF,  p-value: 0.0007329
  
 
 # I
-  
-  
+
+# Variavel adicionada ao modelo foi WAR. Com a inserção dessa variavel no modelo 
+# podemos analisar quais e quanto variavel explica o aumento de votos no presidente 
+# incubente, contudo a variavel não foi considerada significante no modelo. 
+
 # II
 
+# O modelo apresenta que o aumento de 1 unidade da variavel Growth,
+# existe um aumento de 0,6284% na variavel dependente. Ja para a variavel WAR, atraves 
+# do modelo podemos observar que o aumento de uma unidade da variavel independente ocorre 
+# uma diminuição de - -3.9510 na variavel depentente.
 
 # III
 
-# Quanto ao Ajuste- Erro
-
-
-# Capacidade explicativa- RÂ² ajustado
+# O R² varia entre 0 e 1 e indica em percentagem o quanto o modelo consegue explicar os valores
+# observados na variavel dependente.Quanto ao R² ajustado apresentado no modelo 3, o modelo apresenta 
+# o valor de 0,3502.
 
 #Coeficientes estimados
 
 coef(regressaoD)
 
-# (Intercept)      GROWTH    GOODNEWS         WAR 
-# -48.0478580  -0.5728541  -0.7283675  -0.1697900 
+# (Intercept)      GROWTH         WAR 
+# -52.2459755  -0.6284291   3.9510411 
 
-# Intervalos de ConfianÃ§a
+# Para os coefientes estimados de angulação da reta o modelo retorna os valores de -52.2459755 para quando X1 e X2 forem 0
+# Já para X1 o valor é -0.6284291 quando WAR é zero. Já para WAR, o valor apresentado foi de 3.9510411
+# para quando GROWTH for 0.
+
+# Intervalos de Confianca
 
 confint(regressaoD)
 
 #                  2.5 %     97.5 %
-# (Intercept) 43.25739623 52.8383197
-# GROWTH       0.25448754  0.8912206
-# GOODNEWS    -0.04198698  1.4987219
-# WAR         -7.12709113  7.4666712         
+#  (Intercept)  50.3672354 54.1247155
+# GROWTH        0.3015386  0.9553196
+# WAR         -10.0651037  2.1630215   
+
+# Temos 97,5% de "chance" dos intervalos apresentados conterem o verdadeiro valor da média populacional.
+
 
 # RMSE
 
-rmse(regressaoD,data = read_dta("fair.dta"))
+rmse(regressaoD,data = read_dta("fair.dta")) # 4.65902
 
-# 4.375166
+# O RMSE é a raiz quadrada da variância dos resíduos e indica o ajuste absoluto do modelo aos dados.
+# Valores menores de RMSE indicam melhor ajuste do modelo aos dados apresentados.
 
 # IV
 
+# Com relaçao ao R² ajustado do modelo 2 e do modelo 3 de regressão, o modelo que mais consegue
+# explicar os valores da variavel dependente é o modelo de regressao 2. Comparando tbm o RMSE o modelo 
+# que está melhor  ajustado é o do modelo 2, também.Com relacao ao erro do modelo, o modelo 2 apresenta 
+# erro menor que o modelo 3, o que nos faz entender que o modelo 2, de fato está melhor ajustado aos dados.
 
 # V
 
-# ResÃ­duos e homocedasticidade
+# Residuos e homocedasticidade
 
 par(mfrow = c(2,2))
 
@@ -255,14 +282,30 @@ shapiro.test(regressaoD$residuals)
 # Shapiro-Wilk normality test
 
 # data:  regressaoD$residuals
-# W = 0.97851, p-value = 0.7554
+# W = 0.96845, p-value = 0.4578
 
-# O Teste de Shapiro-Wilk para normalidade avalia a aderÃªncia dos resÃ­duos Ã  distribuiÃ§Ã£o Normal. 
-# O p-valor se refere Ã  hipÃ³tese de que os resÃ­duos seguem de fato uma distribuiÃ§Ã£o Normal,
-# e essa hipÃ³tese Ã© rejeitada, de modo geral, quando p Ã© menor que 0.05. Neste caso, podemos afirmar
-# que os residuos tem distribuicao normal.
+# O Teste de Shapiro-Wilk para normalidade avalia a aderencia dos residuos a distribuicao Normal. 
+# O p-valor se refere a hipotese de que os residuos seguem de fato uma distribuicao Normal,
+# e essa hipotese e rejeitada, de modo geral, quando p valor e menor que 0.05. Neste caso, podemos afirmar
+# que os residuos tem distribuicao normal pois o p valor e maior que 0.05.
 
 # VI
+
+# Segundo a padronização dos coeficientes, e possivel observar os seguintes resultados:
+
+Modelo2
+
+
+
+# Modelo3
+
+# Growth- 
+
+0.6284* 
+
+# A variavel que parece ter maior efeito descritivo sobre a variavel dependente e
+# a variavel GROWTH. Esta variavel independente se mostrou significante em todos os modelos
+# apresentados.
 
 
 # 2
