@@ -17,9 +17,10 @@ require(haven)
 
 setwd("C:\\Users\\karla\\Desktop\\Mestrado\\Análise de Dados\\Lista 7")
 
-read_dta("fair.dta")
 
-summary(read_dta("fair.dta"))
+Votedatabase <- data.frame(read_dta("fair.dta"))
+
+summary(Votedatabase)
 
 #  YEAR           VOTE           PARTY            PERSON          DURATION     
 # Min.   :1880   Min.   :36.12   Min.   :-1.000   Min.   :0.0000   Min.   :0.0000  
@@ -40,7 +41,7 @@ summary(read_dta("fair.dta"))
 
 # Realizando RegressÃ£o Bivariada 
 
-regressaoB <- lm(VOTE ~ GROWTH, data = read_dta("fair.dta"))
+regressaoB <- lm(VOTE ~ GROWTH, data = Votedatabase)
 
 summary(regressaoB)
 
@@ -87,9 +88,7 @@ summary(regressaoB)
 
 # Realizando RegressÃ£o Multivariada 
 
-read_dta("fair.dta")
-
-regressaoC <- lm(VOTE ~ GROWTH + GOODNEWS, data = read_dta("fair.dta"))
+regressaoC <- lm(VOTE ~ GROWTH + GOODNEWS, data = Votedatabase)
 
 summary(regressaoC)
 
@@ -154,7 +153,7 @@ confint(regressaoC)
 
 # RMSE
 
-rmse(regressaoC,data = read_dta("fair.dta") ) # 4.375343
+rmse(regressaoC,data = Votedatabase ) # 4.375343
 
 # O RMSE é a raiz quadrada da variância dos resíduos e indica o ajuste absoluto do modelo aos dados.
 # Valores menores de RMSE indicam melhor ajuste do modelo aos dados apresentados. 
@@ -187,9 +186,8 @@ shapiro.test(regressaoC$residuals)
 
 
 # D
-read_dta("fair.dta")
 
-regressaoD <- lm(VOTE ~ GROWTH + WAR, data = read_dta("fair.dta"))
+regressaoD <- lm(VOTE ~ GROWTH + WAR, data = Votedatabase)
 
 summary(regressaoD)
 
@@ -257,7 +255,7 @@ confint(regressaoD)
 
 # RMSE
 
-rmse(regressaoD,data = read_dta("fair.dta")) # 4.65902
+rmse(regressaoD,data = Votedatabase) # 4.65902
 
 # O RMSE é a raiz quadrada da variância dos resíduos e indica o ajuste absoluto do modelo aos dados.
 # Valores menores de RMSE indicam melhor ajuste do modelo aos dados apresentados.
@@ -293,19 +291,35 @@ shapiro.test(regressaoD$residuals)
 
 # Segundo a padronização dos coeficientes, e possivel observar os seguintes resultados:
 
-Modelo2
+# Modelo2 (GROWTH- GOODNEWS)
 
+#GROWTH
 
+0.5730* (sd(Votedatabase$GROWTH)/ sd(Votedatabase$VOTE)) # 0.5227507
 
-# Modelo3
+# GOODNEWS
 
-# Growth- 
+0.7177* (sd(Votedatabase$GOODNEWS)/ sd(Votedatabase$VOTE)) # 0.3373452
 
-0.6284* 
+# Modelo3 (GROWTH- WAR)
 
-# A variavel que parece ter maior efeito descritivo sobre a variavel dependente e
-# a variavel GROWTH. Esta variavel independente se mostrou significante em todos os modelos
-# apresentados.
+# Growth
+
+0.6284* (sd(Votedatabase$GROWTH)/ sd(Votedatabase$VOTE)) # 0.5732924
+
+#WAR
+
+-3.9510* (sd(Votedatabase$WAR)/ sd(Votedatabase$VOTE)) # -0.1927168
+
+# A variavel que tem maior efeito descritivo sobre a variavel dependente e a 
+#variavel GROWTH. Esta variavel independente se mostrou significante em todos 
+# os modelos apresentados. E de acordo com a padronizacao dos coeficientes no modelo
+# 2 ela tem um efeito descritivo de 0.5227507, enquanto que a varavel GOODNEWS
+# apresenta um efeito de 0.3373452. Já no modelo 3 a variavel GROWTH apresenta um efeito
+# descritivo de 0.6284, enquanto que a variavel WAR apresenta um efeito estatisticamente
+# insignificante negativo de -3.9510. Desta forma podemos concluir que a variavel independente
+# GROWTH tem maior efeito descritivo quando se trata do percentual de votos sobre o candidato
+# do partido incubente.
 
 
 # 2
